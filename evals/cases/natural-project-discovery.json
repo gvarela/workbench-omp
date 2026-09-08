@@ -1,0 +1,28 @@
+{
+  "name": "natural-project-discovery",
+  "fixture": "empty",
+  "prompt": "Set up a new Workbench project named widget-parser-refactor in the default plans directory with no ticket. Create the complete initial documentation structure now.",
+  "timeoutSeconds": 180,
+  "assert": {
+    "commands": ["wb:create_project"],
+    "finalContains": ["/wb:create_research"],
+    "workspace": {
+      "files": [
+        "docs/plans/*-widget-parser-refactor/README.md",
+        "docs/plans/*-widget-parser-refactor/research.md",
+        "docs/plans/*-widget-parser-refactor/design.md",
+        "docs/plans/*-widget-parser-refactor/tasks.md"
+      ],
+      "contains": {
+        "docs/plans/*-widget-parser-refactor/README.md": ["Ticket:** N/A", "/wb:create_research"],
+        "docs/plans/*-widget-parser-refactor/research.md": ["ticket: null", "status: draft"]
+      },
+      "absent": {
+        "docs/plans/*-widget-parser-refactor/*.md": ["{{", "TBD", "TODO", "[To be added", "[placeholder", "[Fill this in"]
+      },
+      "frontmatter": {
+        "docs/plans/*-widget-parser-refactor/{research,design,tasks}.md": ["project", "ticket", "created", "created_timestamp", "status", "last_updated", "git_commit", "git_branch", "repository", "tags"]
+      }
+    }
+  }
+}

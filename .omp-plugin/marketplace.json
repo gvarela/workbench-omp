@@ -1,0 +1,18 @@
+{
+  "name": "gvarela-workbench-omp",
+  "owner": {
+    "name": "Gabriel Varela"
+  },
+  "metadata": {
+    "description": "Workbench plugins for oh-my-pi",
+    "version": "2.6.0"
+  },
+  "plugins": [
+    {
+      "name": "wb",
+      "source": "./",
+      "description": "Workbench for structured software development with TDD, project planning, and Beads integration.",
+      "version": "2.6.0"
+    }
+  ]
+}

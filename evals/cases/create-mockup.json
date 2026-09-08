@@ -1,0 +1,44 @@
+{
+  "name": "create-mockup",
+  "fixture": "ui",
+  "beads": {},
+  "prompt": "/wb:create_mockup docs/plans/2026-09-06-settings-panel Workspace settings panel reachable from the dashboard. Run the full workflow, including the mandatory single five-item research task batch. Clarifying-question answers, so do not stop to ask: (1) lets workspace admins change the workspace name, notification email, and weekly digest without leaving the dashboard; (2) workspace admins; (3) workspace name, notification email, weekly digest on/off; (4) save or cancel; (5) loading, error on save failure, success confirmation; (6) under Settings in the header nav, next to Account settings; (7) the Settings nav link; (8) back to the dashboard; (9) static HTML and the existing styles/app.css only, no new CSS framework; (10) yes, the existing 720px breakpoint. Produce v001 with the screenshot and initialize mockup-log.md. The visual check confirmation is unavailable in this session: present v001 and stop without inferring approval.",
+  "timeoutSeconds": 480,
+  "assert": {
+    "commands": ["wb:create_mockup"],
+    "finalContains": [],
+    "workspace": {
+      "files": [
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.md",
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.html",
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/decisions.md",
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/preview-v001.png",
+        "docs/plans/2026-09-06-settings-panel/mockups/mockup-log.md"
+      ],
+      "missing": ["docs/plans/2026-09-06-settings-panel/mockups/v002/**"],
+      "contains": {
+        "docs/plans/2026-09-06-settings-panel/mockups/mockup-log.md": ["current_version: 1", "status: iterating"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.html": ["href=\"../../../../../styles/app.css\"", "class=\"card", "btn--primary"],
+        "docs/plans/2026-09-06-settings-panel/design.md": ["status: draft", "Design has not started."]
+      },
+      "absent": {
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.md": ["TBD", "TODO", "{{", "[feature name]"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.html": ["tailwindcss", "[discovered", "fa-solid", "material-icons"]
+      },
+      "frontmatter": {
+        "docs/plans/2026-09-06-settings-panel/mockups/mockup-log.md": ["feature", "current_version", "status", "project_directory"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.md": ["version", "status", "feature", "based_on"]
+      }
+    },
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-codebase-analyzer",
+        "wb-codebase-analyzer",
+        "wb-codebase-analyzer",
+        "wb-codebase-analyzer",
+        "wb-pattern-finder"
+      ],
+      "forbiddenTools": ["web_search"]
+    }
+  }
+}

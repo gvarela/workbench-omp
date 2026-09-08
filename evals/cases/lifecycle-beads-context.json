@@ -1,0 +1,46 @@
+{
+  "name": "lifecycle-beads-context",
+  "fixture": "execution-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Command aliases",
+        "type": "epic"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1: Alias resolution",
+        "type": "milestone",
+        "parent": "eval-epic"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Add alias resolution",
+        "parent": "eval-epic.1"
+      }
+    ]
+  },
+  "prompt": "Without calling any tool, answer from the context already injected into this session: (1) state the Beads mode exactly as 'Beads mode: <value>'; (2) quote one line from the injected bd prime context. If no such context exists, answer exactly 'no injected context'.",
+  "timeoutSeconds": 120,
+  "assert": {
+    "commands": [],
+    "finalContains": [
+      "Beads mode: git"
+    ],
+    "trace": {
+      "forbiddenTools": [
+        "bash",
+        "read",
+        "grep",
+        "glob"
+      ],
+      "customMessages": [
+        {
+          "customType": "wb-beads-context",
+          "exact": 1
+        }
+      ]
+    }
+  }
+}

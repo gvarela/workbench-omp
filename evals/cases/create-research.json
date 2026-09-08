@@ -1,0 +1,47 @@
+{
+  "name": "create-research",
+  "fixture": "research-target",
+  "prompt": "/wb:create_research docs/plans/2026-09-01-command-catalog How does command registration and lookup work from CLI input through errors and tests? Execute the full workflow now. There are no product recommendations in scope.",
+  "timeoutSeconds": 300,
+  "assert": {
+    "commands": [
+      "wb:create_research"
+    ],
+    "finalContains": [
+      "/wb:create_design"
+    ],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-catalog/research.md": [
+          "status: complete",
+          "## Detailed findings",
+          "src/catalog.ts:",
+          "src/cli.ts:",
+          "test/catalog.test.ts:"
+        ]
+      },
+      "absent": {
+        "docs/plans/2026-09-01-command-catalog/research.md": [
+          "TBD",
+          "TODO",
+          "{{",
+          "should be changed",
+          "recommend"
+        ]
+      },
+      "citations": [
+        "docs/plans/2026-09-01-command-catalog/research.md"
+      ]
+    },
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-codebase-locator",
+        "wb-codebase-analyzer",
+        "wb-pattern-finder"
+      ],
+      "forbiddenTools": [
+        "web_search"
+      ]
+    }
+  }
+}

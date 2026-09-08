@@ -1,0 +1,28 @@
+{
+  "name": "create-project",
+  "fixture": "empty",
+  "prompt": "/wb:create_project parser-refresh docs/plans GH-42. Execute the workflow completely in this repository without asking questions.",
+  "timeoutSeconds": 180,
+  "assert": {
+    "commands": ["wb:create_project"],
+    "finalContains": ["/wb:create_research"],
+    "workspace": {
+      "files": [
+        "docs/plans/*-GH-42-parser-refresh/README.md",
+        "docs/plans/*-GH-42-parser-refresh/research.md",
+        "docs/plans/*-GH-42-parser-refresh/design.md",
+        "docs/plans/*-GH-42-parser-refresh/tasks.md"
+      ],
+      "contains": {
+        "docs/plans/*-GH-42-parser-refresh/README.md": ["GH-42", "/wb:create_research"],
+        "docs/plans/*-GH-42-parser-refresh/tasks.md": ["status: not-started", "Beads becomes the durable status authority"]
+      },
+      "absent": {
+        "docs/plans/*-GH-42-parser-refresh/*.md": ["{{", "TBD", "TODO", "[To be added", "[placeholder", "[Fill this in"]
+      },
+      "frontmatter": {
+        "docs/plans/*-GH-42-parser-refresh/{research,design,tasks}.md": ["project", "ticket", "created", "created_timestamp", "status", "last_updated", "git_commit", "git_branch", "repository", "tags"]
+      }
+    }
+  }
+}

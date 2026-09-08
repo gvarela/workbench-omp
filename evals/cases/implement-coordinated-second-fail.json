@@ -1,0 +1,56 @@
+{
+  "name": "implement-coordinated-second-fail",
+  "fixture": "retry-failure-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Counter",
+        "type": "epic"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1: Increment",
+        "type": "milestone",
+        "parent": "eval-epic"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Increment by one",
+        "parent": "eval-epic.1",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "prompt": "/wb:implement_coordinated docs/plans/2026-09-06-counter continue. Read skill://wb-implement_coordinated and all supporting files. User-reported resume state: the initial verifier failed and the single allowed wb-task-worker-slow fix attempt has completed; this is the second verifier gate. Do not spawn another worker. Run the independent verifier now. When it fails the still-achievable increment contract, put eval-epic.1.1 on the blocking list, leave it unclosed, and halt at the phase blocking checkpoint.",
+  "timeoutSeconds": 420,
+  "assert": {
+    "commands": [
+      "wb:implement_coordinated"
+    ],
+    "finalContains": [
+      "Blocking tasks",
+      "eval-epic.1.1"
+    ],
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-task-verifier"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Increment by one",
+          "status": "in_progress",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase 1: Increment",
+          "status": "open",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 3
+    }
+  }
+}

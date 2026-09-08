@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ledgerboard - Dashboard</title>
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__brand">Ledgerboard</div>
+    <nav class="app-nav">
+      <a class="app-nav__link app-nav__link--active" href="index.html">Dashboard</a>
+      <a class="app-nav__link" href="settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <h1 class="page-title">Dashboard</h1>
+
+    <div class="card-grid">
+      <section class="card">
+        <div class="card__header">Open invoices</div>
+        <div class="card__body">
+          <div class="stat">14</div>
+          <div class="stat__label">Awaiting payment</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">Paid this month</div>
+        <div class="card__body">
+          <div class="stat">$12,480</div>
+          <div class="stat__label">Across 9 invoices</div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

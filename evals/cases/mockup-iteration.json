@@ -1,0 +1,44 @@
+{
+  "name": "mockup-iteration",
+  "fixture": "ui-iterating",
+  "beads": {},
+  "prompt": "/wb:mockup-iteration docs/plans/2026-09-06-settings-panel Feedback on v001 of the workspace settings mockup: keep the card layout and the Save/Cancel footer. Remove the weekly digest checkbox from the form; it belongs in notification preferences, not here. Change the page title to \"Workspace\". Also, should saving return the admin to the dashboard or stay on the panel with a confirmation? I do not know yet; track it as a question. I confirm: create the next version now with this feedback, take the screenshot, and update the log. Do not finalize.",
+  "timeoutSeconds": 360,
+  "assert": {
+    "commands": ["wb:mockup-iteration"],
+    "finalContains": ["v002"],
+    "workspace": {
+      "files": [
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/mockup.md",
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/mockup.html",
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/decisions.md",
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/preview-v002.png",
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.html"
+      ],
+      "missing": ["docs/plans/2026-09-06-settings-panel/mockups/v003/**"],
+      "contains": {
+        "docs/plans/2026-09-06-settings-panel/mockups/mockup-log.md": ["current_version: 2", "### v002", "### Confirmed (KEEP)", "### Rejected (REMOVE)", "card layout", "weekly digest"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/decisions.md": ["previous_version: 1", "REMOVE"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/mockup.html": ["app.css", "btn--primary"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v001/mockup.html": ["weekly-digest"]
+      },
+      "absent": {
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/mockup.html": ["weekly-digest", "[user quote]"],
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/mockup.md": ["TBD", "{{"],
+        "docs/plans/2026-09-06-settings-panel/design.md": ["## UI Design"]
+      },
+      "frontmatter": {
+        "docs/plans/2026-09-06-settings-panel/mockups/v002/decisions.md": ["version", "previous_version"],
+        "docs/plans/2026-09-06-settings-panel/mockups/mockup-log.md": ["current_version", "last_updated"]
+      }
+    },
+    "beads": {
+      "titles": [
+        {"prefix": "UI Q:", "status": "open", "minimum": 1}
+      ]
+    },
+    "trace": {
+      "forbiddenTools": ["task", "web_search"]
+    }
+  }
+}

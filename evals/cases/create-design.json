@@ -1,0 +1,64 @@
+{
+  "name": "create-design",
+  "fixture": "design-input",
+  "beads": {
+    "issues": [
+      {
+        "title": "Decide: command alias resolution boundary",
+        "type": "task",
+        "description": "Options: CLI-only normalization or catalog-owned resolution. Exploration: docs/plans/2026-09-01-command-aliases/thoughts/2026-09-01-alias-boundary.md.",
+        "status": "closed",
+        "closeReason": "Chosen: Catalog-owned alias resolution. Rationale: all catalog callers receive one consistent contract. Rejected: CLI-only normalization excludes direct callers. Exploration: docs/plans/2026-09-01-command-aliases/thoughts/2026-09-01-alias-boundary.md."
+      }
+    ]
+  },
+  "prompt": "/wb:create_design docs/plans/2026-09-01-command-aliases. Follow every numbered skill step, including the mandatory single task batch. I explicitly confirm formalization of the closed Decide direction. Write the design, then stop at the required final design-approval checkpoint.",
+  "timeoutSeconds": 360,
+  "assert": {
+    "commands": [
+      "wb:create_design"
+    ],
+    "finalContains": [],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/design.md": [
+          "status: draft",
+          "approval: pending",
+          "design_approach:",
+          "decision_records:",
+          "Catalog-owned",
+          "## Rejected alternatives"
+        ]
+      },
+      "absent": {
+        "docs/plans/2026-09-01-command-aliases/design.md": [
+          "TBD",
+          "TODO",
+          "{{",
+          "## Implementation plan",
+          "decision_records: []"
+        ]
+      },
+      "citations": [
+        "docs/plans/2026-09-01-command-aliases/design.md"
+      ]
+    },
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-pattern-finder",
+        "wb-codebase-analyzer",
+        "wb-pattern-finder"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Decide:",
+          "status": "closed",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 1
+    }
+  }
+}

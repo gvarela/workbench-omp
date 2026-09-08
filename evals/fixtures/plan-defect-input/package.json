@@ -1,0 +1,1 @@
+{"name":"plan-defect-input","private":true,"type":"module","scripts":{"test":"bun test test/token.test.ts"}}

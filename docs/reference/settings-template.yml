@@ -1,0 +1,22 @@
+# Copy these values into the applicable OMP config.yml.
+# Assign provider/model selectors to the built-in roles locally.
+# Marketplace agent discovery is provided by OMP's Claude-plugin provider.
+enabledProviders:
+  - claude-plugins
+
+modelRoleStorage: project
+
+modelRoles:
+  review: "@slow"
+
+retry:
+  fallbackChains:
+    review:
+      - "@slow"
+      - "@default"
+
+task:
+  softRequestBudget: 200
+  maxConcurrency: 8
+  enableEffort: false
+  enableLsp: true

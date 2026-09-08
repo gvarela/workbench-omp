@@ -1,0 +1,82 @@
+{
+  "name": "validate-execution-implemented",
+  "fixture": "validated-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Command aliases",
+        "type": "epic",
+        "status": "closed"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1: Alias lookup",
+        "type": "milestone",
+        "parent": "eval-epic",
+        "status": "closed"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Add alias lookup",
+        "parent": "eval-epic.1",
+        "status": "closed"
+      }
+    ]
+  },
+  "prompt": "/wb:validate_execution docs/plans/2026-09-06-command-aliases. Read skill://wb-validate_execution and every supporting file it requires, then follow every step. Validate the implemented plan without mutating files or Beads. The manual check is pending, not confirmed.",
+  "timeoutSeconds": 420,
+  "assert": {
+    "commands": [
+      "wb:validate_execution"
+    ],
+    "finalContains": [
+      "Overall: PASS",
+      "bun test test/catalog.test.ts"
+    ],
+    "workspace": {
+      "contains": {
+        "src/catalog.ts": [
+          "registerAlias(alias: string, target: string)"
+        ],
+        "docs/plans/2026-09-06-command-aliases/tasks.md": [
+          "status: complete",
+          "completed_tasks: 1"
+        ]
+      }
+    },
+    "trace": {
+      "singleTaskBatchAgents": [
+        "task",
+        "task",
+        "wb-codebase-analyzer",
+        "wb-pattern-finder"
+      ],
+      "singleTaskBatchSize": 4,
+      "adHocTaskContains": [
+        "Document what is",
+        "Do not write files",
+        "mutate Beads"
+      ],
+      "forbiddenTools": [
+        "write",
+        "edit"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Add alias lookup",
+          "status": "closed",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase 1: Alias lookup",
+          "status": "closed",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 3
+    }
+  }
+}

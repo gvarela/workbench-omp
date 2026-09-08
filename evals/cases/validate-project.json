@@ -1,0 +1,36 @@
+{
+  "name": "validate-project",
+  "fixture": "planning-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-decision",
+        "title": "Decide: command alias resolution boundary",
+        "type": "decision",
+        "description": "Catalog-owned alias resolution.",
+        "status": "closed",
+        "closeReason": "Chosen catalog-owned resolution."
+      }
+    ]
+  },
+  "prompt": "/wb:validate_project docs/plans/2026-09-01-command-aliases. Execute every validation category and report only observed evidence. Do not repair anything and never use bd q.",
+  "timeoutSeconds": 300,
+  "assert": {
+    "commands": ["wb:validate_project"],
+    "finalContains": ["FAIL", "beads_epic", "tasks.md"],
+    "workspace": {
+      "absent": {
+        "docs/plans/2026-09-01-command-aliases/tasks.md": ["beads_epic:", "beads_phases:", "beads_tasks:"]
+      }
+    },
+    "trace": {
+      "forbiddenTools": ["write", "edit"]
+    },
+    "beads": {
+      "titles": [
+        {"prefix": "Decide:", "status": "closed", "minimum": 1}
+      ],
+      "exactTotal": 1
+    }
+  }
+}

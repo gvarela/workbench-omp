@@ -1,0 +1,91 @@
+{
+  "name": "create-tasks",
+  "fixture": "planning-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-decision",
+        "title": "Decide: command alias resolution boundary",
+        "type": "decision",
+        "description": "Catalog-owned alias resolution with immutable aliases and atomic collision rejection.",
+        "status": "closed",
+        "closeReason": "Chosen: catalog-owned resolution. Commands declare immutable aliases; registration rejects all canonical-name and alias collisions before mutation."
+      }
+    ]
+  },
+  "prompt": "/wb:create_tasks docs/plans/2026-09-01-command-aliases. Follow every numbered skill step, including the mandatory single task batch and complete coordinator-owned Beads hierarchy. Plan only the approved design. Read the effective project config from the repository root, never from inside docs/plans; it sets task.softRequestBudget to 90. Preserve status, current_phase, total_tasks, and completed_tasks exactly for /wb:update_status: use surgical edit hunks that leave their original frontmatter lines outside every edited range; never replace or retype those lines. Do not write tasks.md until every final Beads id exists. Preserve the immutable TypeScript contract exactly as `aliases?: readonly string[]`. Registration validation and lookup consume the shared alias type but not each other's output; each behavioral task owns its focused test changes in test/catalog.test.ts, so their source and test allowed files overlap. Serialize them explicitly as file-overlap serialization in both the plan and dependent Beads issue. Do not create a later test-only task that duplicates those focused scenarios. Use only verification commands supported by package.json.",
+  "timeoutSeconds": 900,
+  "assert": {
+    "commands": [
+      "wb:create_tasks"
+    ],
+    "finalContains": [
+      "/wb:update_status"
+    ],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/tasks.md": [
+          "status: not-started",
+          "current_phase: 0",
+          "total_tasks: 0",
+          "completed_tasks: 0",
+          "depends_on: [research.md, design.md]",
+          "beads_epic:",
+          "beads_phases:",
+          "beads_tasks:",
+          "Worker request budget:",
+          "90 requests",
+          "## Phase",
+          "### Phase verification",
+          "overlap serialization",
+          "aliases?: readonly string[]",
+          "Beads is authoritative"
+        ]
+      },
+      "absent": {
+        "docs/plans/2026-09-01-command-aliases/tasks.md": [
+          "TBD",
+          "TODO",
+          "{{",
+          "- [ ]",
+          "bun run build",
+          "- **Type:** Test",
+          "- **Type:** test",
+          "Add comprehensive alias test coverage"
+        ]
+      },
+      "citations": [
+        "docs/plans/2026-09-01-command-aliases/tasks.md"
+      ]
+    },
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-codebase-analyzer",
+        "wb-codebase-analyzer",
+        "wb-pattern-finder"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "command",
+          "status": "open",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase ",
+          "status": "open",
+          "minimum": 1
+        }
+      ],
+      "hierarchy": {
+        "epicPrefix": "command",
+        "milestonePrefix": "Phase ",
+        "minimumTasks": 2
+      },
+      "contains": [
+        "overlap serialization"
+      ]
+    }
+  }
+}

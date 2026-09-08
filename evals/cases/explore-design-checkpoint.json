@@ -1,0 +1,39 @@
+{
+  "name": "explore-design-checkpoint",
+  "fixture": "researched",
+  "beads": {},
+  "prompt": "/wb:explore_design docs/plans/2026-09-01-command-aliases Focus on whether aliases resolve at registration or lookup. I have not confirmed your framing. Stop at the framing checkpoint, preserve the open decision record, and do not infer approval.",
+  "timeoutSeconds": 180,
+  "assert": {
+    "commands": [
+      "wb:explore_design"
+    ],
+    "finalContains": [],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/design.md": [
+          "status: draft",
+          "Design has not started."
+        ]
+      },
+      "missing": [
+        "docs/plans/2026-09-01-command-aliases/thoughts/*.md"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Decide:",
+          "status": "open",
+          "minimum": 1
+        }
+      ]
+    },
+    "trace": {
+      "forbiddenTools": [
+        "write",
+        "edit"
+      ]
+    }
+  }
+}

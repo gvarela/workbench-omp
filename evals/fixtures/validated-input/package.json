@@ -1,0 +1,8 @@
+{
+  "name": "validated-input",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test test/catalog.test.ts"
+  }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ledgerboard - Account settings</title>
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__brand">Ledgerboard</div>
+    <nav class="app-nav">
+      <a class="app-nav__link" href="index.html">Dashboard</a>
+      <a class="app-nav__link app-nav__link--active" href="settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <h1 class="page-title">Account settings</h1>
+
+    <form class="card">
+      <div class="card__header">Profile</div>
+      <div class="card__body">
+        <div class="form-field">
+          <label class="form-field__label" for="display-name">Display name</label>
+          <input class="form-field__input" id="display-name" type="text" value="Avery Chen">
+        </div>
+        <div class="form-field">
+          <label class="form-field__label" for="email">Email</label>
+          <input class="form-field__input" id="email" type="email" value="avery@example.com">
+          <span class="form-field__hint">Used for invoice receipts.</span>
+        </div>
+        <div class="notice notice--error" hidden>Could not save your changes. Try again.</div>
+      </div>
+      <div class="card__footer">
+        <button class="btn btn--secondary" type="button">Cancel</button>
+        <button class="btn btn--primary" type="submit">Save</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

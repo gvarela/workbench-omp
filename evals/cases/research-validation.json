@@ -1,0 +1,22 @@
+{
+  "name": "research-validation",
+  "fixture": "research-target",
+  "prompt": "/wb:research-validation docs/plans/2026-09-01-command-catalog/bad-research.md. Validate it completely and record the validation metadata.",
+  "timeoutSeconds": 240,
+  "assert": {
+    "commands": ["wb:research-validation"],
+    "finalContains": ["FAIL", "src/catalog.ts:999"],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-catalog/bad-research.md": [
+          "status: draft",
+          "validation_status: failed",
+          "last_validated:"
+        ]
+      }
+    },
+    "trace": {
+      "singleTaskBatchAgents": ["wb-research-validator"]
+    }
+  }
+}

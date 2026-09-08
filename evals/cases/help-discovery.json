@@ -1,0 +1,33 @@
+{
+  "name": "help-discovery",
+  "fixture": "empty",
+  "prompt": "/wb:help workflow commands",
+  "timeoutSeconds": 120,
+  "assert": {
+    "commands": [
+      "wb:create_design",
+      "wb:create_handoff",
+      "wb:create_mockup",
+      "wb:create_product_research",
+      "wb:create_project",
+      "wb:create_research",
+      "wb:create_tasks",
+      "wb:explore_design",
+      "wb:help",
+      "wb:implement_coordinated",
+      "wb:implement_tasks",
+      "wb:mockup-iteration",
+      "wb:research-validation",
+      "wb:resume_handoff",
+      "wb:review-prep",
+      "wb:update_status",
+      "wb:validate_execution",
+      "wb:validate_project"
+    ],
+    "finalContains": [
+      "/wb:create_project",
+      "/wb:implement_tasks",
+      "/wb:validate_execution"
+    ]
+  }
+}

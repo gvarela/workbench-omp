@@ -1,0 +1,1 @@
+{"name":"retry-failure-input","private":true,"type":"module","scripts":{"test":"bun test test/counter.test.ts"}}

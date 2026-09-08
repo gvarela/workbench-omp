@@ -1,0 +1,91 @@
+{
+  "name": "implement-coordinated-wave",
+  "fixture": "coordinated-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Command UX",
+        "type": "epic"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1: Independent command improvements",
+        "type": "milestone",
+        "parent": "eval-epic"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Add alias resolution",
+        "parent": "eval-epic.1"
+      },
+      {
+        "id": "eval-epic.1.2",
+        "title": "Render descriptive help",
+        "parent": "eval-epic.1"
+      }
+    ]
+  },
+  "prompt": "/wb:implement_coordinated docs/plans/2026-09-06-command-ux 1. Read skill://wb-implement_coordinated and every supporting file it requires, then follow every step. Run the two independent tasks as one collision-free worker wave and independently verify both. At the human checkpoint confirmation is unavailable, so leave the phase milestone open and stop.",
+  "timeoutSeconds": 600,
+  "assert": {
+    "commands": [
+      "wb:implement_coordinated"
+    ],
+    "finalContains": [],
+    "workspace": {
+      "contains": {
+        "src/catalog.ts": [
+          "registerAlias"
+        ],
+        "test/catalog.test.ts": [
+          "registerAlias"
+        ],
+        "src/help.ts": [
+          "command.description"
+        ],
+        "test/help.test.ts": [
+          "open: Open a file"
+        ],
+        "docs/plans/2026-09-06-command-ux/tasks.md": [
+          "status: not-started",
+          "completed_tasks: 0"
+        ]
+      }
+    },
+    "trace": {
+      "taskBatches": [
+        [
+          "wb-task-worker-task",
+          "wb-task-worker-task"
+        ],
+        [
+          "wb-task-verifier",
+          "wb-task-verifier"
+        ]
+      ],
+      "closeAfterVerifierPass": true,
+      "maxTaskCalls": 2
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Add alias resolution",
+          "status": "closed",
+          "minimum": 1
+        },
+        {
+          "prefix": "Render descriptive help",
+          "status": "closed",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase 1: Independent command improvements",
+          "status": "open",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 4
+    }
+  }
+}

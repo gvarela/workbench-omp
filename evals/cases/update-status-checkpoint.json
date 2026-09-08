@@ -1,0 +1,87 @@
+{
+  "name": "update-status-checkpoint",
+  "fixture": "status-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Command aliases implementation",
+        "type": "epic",
+        "description": "Execution epic.",
+        "status": "open"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1 Milestone: Catalog contract",
+        "type": "task",
+        "description": "Phase gate.",
+        "status": "open"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Define alias contract",
+        "type": "task",
+        "description": "Define the approved public contract.",
+        "status": "closed",
+        "closeReason": "Contract implemented and verified."
+      },
+      {
+        "id": "eval-epic.1.2",
+        "title": "Implement alias resolution",
+        "type": "task",
+        "description": "Implement observable alias behavior.",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "prompt": "/wb:update_status docs/plans/2026-09-01-command-aliases. Derive the atomic reconciliation plan from mapped Beads state and stop at the explicit approval barrier; I have not approved any edits yet.",
+  "timeoutSeconds": 300,
+  "assert": {
+    "commands": [
+      "wb:update_status"
+    ],
+    "finalContains": [
+      "in-progress",
+      "1/2"
+    ],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/design.md": [
+          "status: ready"
+        ],
+        "docs/plans/2026-09-01-command-aliases/tasks.md": [
+          "status: not-started",
+          "current_phase: 0",
+          "total_tasks: 0",
+          "completed_tasks: 0"
+        ]
+      }
+    },
+    "trace": {
+      "forbiddenTools": [
+        "write",
+        "edit"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Command aliases",
+          "status": "open",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase 1 Milestone:",
+          "status": "open",
+          "minimum": 1
+        },
+        {
+          "prefix": "Define alias contract",
+          "status": "closed",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 4
+    }
+  }
+}

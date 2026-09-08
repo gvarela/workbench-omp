@@ -1,0 +1,62 @@
+{
+  "name": "create-handoff",
+  "fixture": "status-input",
+  "beads": {
+    "issues": [
+      {"id": "eval-epic", "title": "Command aliases implementation", "type": "epic", "description": "Execution epic.", "status": "open"},
+      {"id": "eval-epic.1", "title": "Phase 1 Milestone: Catalog contract", "type": "task", "description": "Phase gate.", "status": "open"},
+      {"id": "eval-epic.1.1", "title": "Define alias contract", "type": "task", "description": "Define contract.", "status": "closed", "closeReason": "Verified."},
+      {"id": "eval-epic.1.2", "title": "Implement alias resolution", "type": "task", "description": "Current implementation work.", "status": "in_progress"}
+    ]
+  },
+  "prompt": "/wb:create_handoff docs/plans/2026-09-01-command-aliases switching to a fresh session. Capture only current evidence, mapped Beads state, Git state, stale document progress, and an executable next action.",
+  "timeoutSeconds": 300,
+  "assert": {
+    "commands": ["wb:create_handoff"],
+    "finalContains": ["/wb:resume_handoff", "handoff-"],
+    "workspace": {
+      "files": ["docs/plans/2026-09-01-command-aliases/handoff-*.md"],
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/handoff-*.md": [
+          "type: handoff",
+          "git_commit:",
+          "beads_epic: eval-epic",
+          "beads_in_progress:",
+          "beads_ready:",
+          "beads_blocked:",
+          "## Resume contract",
+          "## Beads snapshot",
+          "## Working tree",
+          "## Next actions",
+          "/wb:update_status"
+        ],
+        "docs/plans/2026-09-01-command-aliases/tasks.md": ["status: not-started", "completed_tasks: 0"]
+      },
+      "absent": {
+        "docs/plans/2026-09-01-command-aliases/handoff-*.md": ["{{", "[TBD]", "[TODO]", "- [ ]"]
+      },
+      "frontmatter": {
+        "docs/plans/2026-09-01-command-aliases/handoff-*.md": [
+          "created",
+          "type",
+          "project",
+          "phase",
+          "git_commit",
+          "git_branch",
+          "repository",
+          "beads_epic",
+          "beads_active_phase",
+          "beads_in_progress",
+          "beads_ready",
+          "beads_blocked"
+        ]
+      }
+    },
+    "beads": {
+      "titles": [
+        {"prefix": "Implement alias resolution", "status": "in_progress", "minimum": 1}
+      ],
+      "exactTotal": 4
+    }
+  }
+}

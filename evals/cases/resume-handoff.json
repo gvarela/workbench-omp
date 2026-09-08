@@ -1,0 +1,36 @@
+{
+  "name": "resume-handoff",
+  "fixture": "resume-input",
+  "beads": {
+    "issues": [
+      {"id": "eval-epic", "title": "Command aliases implementation", "type": "epic", "description": "Execution epic.", "status": "open"},
+      {"id": "eval-epic.1", "title": "Phase 1 Milestone: Catalog contract", "type": "task", "description": "Phase gate.", "status": "open"},
+      {"id": "eval-epic.1.1", "title": "Define alias contract", "type": "task", "description": "Contract work.", "status": "closed", "closeReason": "Verified."},
+      {"id": "eval-epic.1.2", "title": "Implement alias resolution", "type": "task", "description": "Behavior work advanced after handoff.", "status": "closed", "closeReason": "Implemented after the recorded handoff."}
+    ]
+  },
+  "prompt": "/wb:resume_handoff docs/plans/2026-09-01-command-aliases/handoff-2026-09-02-09-30.md. Follow every skill step and the report template literally. Re-anchor from current documents, source, Git, and Beads. Report the moved-HEAD and task-status deltas, include the STALE currency verdict and moved-HEAD warning, and end with the exact next command using the project directory. Do not claim or implement work.",
+  "timeoutSeconds": 300,
+  "assert": {
+    "commands": ["wb:resume_handoff"],
+    "finalContains": ["STALE", "0000000000000000000000000000000000000000", "eval-epic.1.2", "closed", "/wb:update_status docs/plans/2026-09-01-command-aliases"],
+    "workspace": {
+      "contains": {
+        "docs/plans/2026-09-01-command-aliases/handoff-2026-09-02-09-30.md": [
+          "git_commit: 0000000000000000000000000000000000000000",
+          "beads_in_progress: [eval-epic.1.2]"
+        ],
+        "docs/plans/2026-09-01-command-aliases/tasks.md": ["status: in-progress", "completed_tasks: 1"]
+      }
+    },
+    "trace": {
+      "forbiddenTools": ["write", "edit"]
+    },
+    "beads": {
+      "titles": [
+        {"prefix": "Implement alias resolution", "status": "closed", "minimum": 1}
+      ],
+      "exactTotal": 4
+    }
+  }
+}

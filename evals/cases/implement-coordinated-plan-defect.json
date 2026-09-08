@@ -1,0 +1,61 @@
+{
+  "name": "implement-coordinated-plan-defect",
+  "fixture": "plan-defect-input",
+  "beads": {
+    "issues": [
+      {
+        "id": "eval-epic",
+        "title": "Token format",
+        "type": "epic"
+      },
+      {
+        "id": "eval-epic.1",
+        "title": "Phase 1: Token output",
+        "type": "milestone",
+        "parent": "eval-epic"
+      },
+      {
+        "id": "eval-epic.1.1",
+        "title": "Load required vendor token",
+        "parent": "eval-epic.1",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "prompt": "/wb:implement_coordinated docs/plans/2026-09-06-token-format continue. Read skill://wb-implement_coordinated and all supporting files. The prior worker result is schema-valid completed with filesChanged [src/token.ts], testsChanged [test/token.test.ts], verificationCommands [bun test test/token.test.ts], observedResults [1 pass], blockers []. Treat it as delivered. The independent verifier gate has not run. After context and Beads reads, you MUST spawn exactly one wb-task-verifier before classifying or mutating any issue; coordinator inspection is forbidden as a substitute. The verifier will discover whether the approved immutable vendor-input precondition holds. Classify its fresh evidence, execute the plan-defect protocol if it fails because the input is unavailable, file the Design revision: issue, and halt the phase without proposing a replacement design.",
+  "timeoutSeconds": 420,
+  "assert": {
+    "commands": [
+      "wb:implement_coordinated"
+    ],
+    "finalContains": [
+      "Design revision:",
+      "eval-epic.1.1"
+    ],
+    "trace": {
+      "singleTaskBatchAgents": [
+        "wb-task-verifier"
+      ]
+    },
+    "beads": {
+      "titles": [
+        {
+          "prefix": "Design revision:",
+          "status": "open",
+          "minimum": 1
+        },
+        {
+          "prefix": "Load required vendor token",
+          "status": "not_closed",
+          "minimum": 1
+        },
+        {
+          "prefix": "Phase 1: Token output",
+          "status": "open",
+          "minimum": 1
+        }
+      ],
+      "exactTotal": 4
+    }
+  }
+}
