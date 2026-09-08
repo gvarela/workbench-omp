@@ -4,28 +4,42 @@ Workbench workflows ported to [oh-my-pi](https://github.com/can1357/oh-my-pi).
 
 ## Installation
 
-Install dependencies in the checkout first; the extension's Markdown lint
-report and `scripts/lint` use `node_modules/.bin/markdownlint`, and marketplace
-installs copy the checkout (including `node_modules`) into OMP's plugin cache:
+### From GitHub
 
 ```sh
-bun install
-omp plugin marketplace add "$PWD"
+omp plugin marketplace add git@github.com:gvarela/workbench-omp.git
 omp plugin install wb@gvarela-workbench-omp
 ```
 
-For development against a live checkout use `omp plugin link "$PWD"` instead of
-the marketplace install; linked plugins read the working tree directly. Both
-paths load `extensions/workbench.ts` through `package.json#omp.extensions`.
+Use the SSH form while the repository is private; the `gvarela/workbench-omp`
+shorthand clones over HTTPS and needs a token. Upgrade with
+`omp plugin upgrade wb`.
+
+The cached clone has no `node_modules`. The extension's Markdown lint report
+then uses a `markdownlint` found on `PATH` (`npm i -g markdownlint-cli`) and is
+silently skipped when none exists; every other feature works without it.
+
+### From a local checkout (development)
+
+```sh
+bun install
+omp plugin link "$PWD"
+```
+
+A linked plugin reads the working tree directly, so skill and command edits
+are live after `/reload-plugins`; extension edits need a session restart.
+Do not add the same checkout as a second marketplace while it is linked: both
+register the plugin name `wb` and the extension loads twice.
+
+Both paths load `extensions/workbench.ts` through `package.json#omp.extensions`.
 
 The settings template enables OMP's `claude-plugins` discovery provider. This
 is required for task agents in a user-scoped install; commands, skills, and
 rules are available without it.
 
-Restart OMP after installing, upgrading, or editing the plugin. Marketplace
-installs are cached copies: rerun `omp plugin install` (or use a linked install)
-to pick up source changes. `/reload-plugins` refreshes skills and slash commands
-of a linked install but never reloads the extension module.
+Restart OMP after installing or upgrading. Marketplace installs are cached
+copies: source changes arrive through `omp plugin upgrade`, not by editing the
+cache.
 
 Use `/wb:help` to verify command discovery.
 

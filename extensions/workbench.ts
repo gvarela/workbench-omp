@@ -157,7 +157,9 @@ export default function workbench(pi: ExtensionAPI): void {
   /** Event keys already handled in the current session (`tool:<callId>`, `compact:<entryId>`). */
   const handled = new Set<string>();
   let lastTree: { leaf: string | null; at: number } | undefined;
-  const lintBinary = resolve(import.meta.dir, "..", "node_modules", ".bin", "markdownlint");
+  // Marketplace installs clone the repo without node_modules; fall back to a PATH markdownlint.
+  const bundledLint = resolve(import.meta.dir, "..", "node_modules", ".bin", "markdownlint");
+  const lintBinary = existsSync(bundledLint) ? bundledLint : Bun.which("markdownlint");
   const pluginLintConfig = resolve(import.meta.dir, "..", ".markdownlintrc");
 
   function firstSeen(key: string): boolean {
@@ -280,7 +282,7 @@ export default function workbench(pi: ExtensionAPI): void {
     if (!LINT_TOOLS[event.toolName] || event.isError) return undefined;
     if (!firstSeen(`tool:${event.toolCallId}`)) return undefined;
     const targets = markdownTargets(event.toolName, event.input).filter(path => existsSync(resolve(ctx.cwd, path)));
-    if (targets.length === 0 || !existsSync(lintBinary)) return undefined;
+    if (targets.length === 0 || !lintBinary) return undefined;
     const config = lintConfigFor(ctx.cwd);
     const args = config ? ["--config", config, ...targets] : targets;
     const lint = await pi.exec(lintBinary, args, { cwd: ctx.cwd, timeout: LINT_TIMEOUT_MS });
