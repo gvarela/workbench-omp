@@ -91,8 +91,16 @@ const WATCHDOG_GRACE_SECONDS = 30;
 
 const casesRoot = resolve(import.meta.dir, "cases");
 const fixturesRoot = resolve(import.meta.dir, "fixtures");
-const configPath = resolve(import.meta.dir, "config.yml");
-const args = process.argv.slice(2);
+const rawArgs = process.argv.slice(2);
+const configFlag = rawArgs.indexOf("--config");
+const configName = configFlag >= 0 ? rawArgs[configFlag + 1] : undefined;
+if (configFlag >= 0 && !configName) {
+  process.stderr.write("--config requires a file name under evals/\n");
+  process.exit(1);
+}
+/** Model-role config for the spawned OMP; `--config config.swap.yml` selects the cross-provider overlay. */
+const configPath = resolve(import.meta.dir, configName ?? "config.yml");
+const args = configFlag >= 0 ? [...rawArgs.slice(0, configFlag), ...rawArgs.slice(configFlag + 2)] : rawArgs;
 
 function fail(message: string): never {
   process.stderr.write(`${message}\n`);
@@ -143,7 +151,7 @@ function parseSelection(cases: EvalCase[]): { mode: "list" | "validate" | "dry-r
     if (!selected) fail(`Unknown eval case: ${args[1]}`);
     return { mode: "run", cases: [selected] };
   }
-  fail("Usage: scripts/eval --list | --validate-cases | --dry-run | --case <name|all>");
+  fail("Usage: scripts/eval [--config <file>] --list | --validate-cases | --dry-run | --case <name|all>");
 }
 
 function messageText(message: TraceMessage | undefined): string {

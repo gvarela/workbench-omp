@@ -3,7 +3,7 @@ name: wb-task-worker-task
 description: Implements one scoped task with the standard model tier and shared worker contracts.
 tools: [read, write, edit, grep, glob, bash]
 model: ["@task"]
-thinkingLevel: xhigh
+thinkingLevel: medium
 autoloadSkills: [wb-task-worker-contract, wb-tdd-discipline]
 output:
   type: object

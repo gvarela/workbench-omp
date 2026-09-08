@@ -176,14 +176,16 @@ for (const name of [
 ]) {
   if (!requireAgent(name).hasOutput) throw new Error(`${name}: output schema is required`);
 }
-const workerProfiles: Array<[string, string[]]> = [
-  ["wb-task-worker-smol", ["@smol"]],
-  ["wb-task-worker-task", ["@task"]],
-  ["wb-task-worker-slow", ["@slow", "@task"]],
+// Effort is part of the tier (Amp "dial" pattern): cheap model at high effort,
+// standard model at medium, escalation model at high; the verifier alone runs xhigh.
+const workerProfiles: Array<[string, string[], string]> = [
+  ["wb-task-worker-smol", ["@smol"], "high"],
+  ["wb-task-worker-task", ["@task"], "medium"],
+  ["wb-task-worker-slow", ["@slow", "@task"], "high"],
 ];
 const workerTools = ["read", "write", "edit", "grep", "glob", "bash", "yield"];
 const workerSkills = ["wb-task-worker-contract", "wb-tdd-discipline"];
-for (const [name, model] of workerProfiles) {
+for (const [name, model, thinkingLevel] of workerProfiles) {
   const agent = requireAgent(name);
   if (JSON.stringify(agent.tools) !== JSON.stringify(workerTools)) {
     throw new Error(`${name}: normalized tools do not match the worker profile`);
@@ -191,11 +193,16 @@ for (const [name, model] of workerProfiles) {
   if (JSON.stringify(agent.model) !== JSON.stringify(model)) {
     throw new Error(`${name}: expected normalized model ${JSON.stringify(model)}`);
   }
-  if (agent.thinkingLevel !== "xhigh") throw new Error(`${name}: thinkingLevel must be xhigh`);
+  if (agent.thinkingLevel !== thinkingLevel) throw new Error(`${name}: thinkingLevel must be ${thinkingLevel}`);
   if (JSON.stringify(agent.autoloadSkills) !== JSON.stringify(workerSkills)) {
     throw new Error(`${name}: shared worker skills must autoload in order`);
   }
 }
+const verifier = requireAgent("wb-task-verifier");
+if (JSON.stringify(verifier.model) !== JSON.stringify(["@review", "@slow"])) {
+  throw new Error("wb-task-verifier: must run on @review (the other provider family) before @slow");
+}
+if (verifier.thinkingLevel !== "xhigh") throw new Error("wb-task-verifier: thinkingLevel must be xhigh");
 for (const agent of report.agentFields) {
   if (agent.model?.some(model => !model.startsWith("@"))) {
     throw new Error(`${agent.name}: concrete model ids are forbidden`);

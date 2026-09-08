@@ -3,7 +3,7 @@ name: wb-task-worker-slow
 description: Implements or repairs one difficult scoped task with the slow model tier and shared worker contracts.
 tools: [read, write, edit, grep, glob, bash]
 model: ["@slow", "@task"]
-thinkingLevel: xhigh
+thinkingLevel: high
 autoloadSkills: [wb-task-worker-contract, wb-tdd-discipline]
 output:
   type: object

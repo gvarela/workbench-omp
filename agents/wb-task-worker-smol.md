@@ -3,7 +3,7 @@ name: wb-task-worker-smol
 description: Implements one tightly scoped task with the fast model tier and shared worker contracts.
 tools: [read, write, edit, grep, glob, bash]
 model: ["@smol"]
-thinkingLevel: xhigh
+thinkingLevel: high
 autoloadSkills: [wb-task-worker-contract, wb-tdd-discipline]
 output:
   type: object

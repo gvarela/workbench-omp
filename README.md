@@ -52,10 +52,24 @@ plugin is enabled:
 
 ## Configuration
 
-Copy the provider-neutral values from
-[`docs/reference/settings-template.yml`](docs/reference/settings-template.yml)
-into the appropriate global or project OMP `config.yml`. Assign concrete model
-selectors locally; the committed template intentionally contains none.
+Copy [`docs/reference/settings-template.yml`](docs/reference/settings-template.yml)
+into the applicable global or project OMP `config.yml` and adjust the concrete
+model ids to what you have authenticated. The role split is the stable part:
+
+| Role | Used by | Template (Anthropic Max + OpenAI Plus, 2026-09) |
+| --- | --- | --- |
+| `default` | main session, coordinator, planning skills | `anthropic/claude-sonnet-5` |
+| `smol` | locator, pattern finder, mechanical workers | `anthropic/claude-haiku-4-5:high` |
+| `task` | standard workers, analyzers | `anthropic/claude-sonnet-5:medium` |
+| `slow` | cross-cutting work, the single escalation fix worker | `anthropic/claude-fable-5-1:high` |
+| `review` | `wb-task-verifier`, reviews: always the other provider family | `openai-codex/gpt-5.5:xhigh` |
+
+The higher-quota subscription carries volume; the lower-quota one carries the
+one-call-per-task verification. `retry.usageAwareFallback` with per-role
+`fallbackChains` keeps the verifier cross-family until that quota is inside the
+reserve, then falls to the strongest same-family model. Swap the two families
+if your subscriptions are the other way round. Effort is part of the tier, so
+`task.enableEffort` stays off.
 
 ## Development
 

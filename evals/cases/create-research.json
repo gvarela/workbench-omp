@@ -2,7 +2,7 @@
   "name": "create-research",
   "fixture": "research-target",
   "prompt": "/wb:create_research docs/plans/2026-09-01-command-catalog How does command registration and lookup work from CLI input through errors and tests? Execute the full workflow now. There are no product recommendations in scope.",
-  "timeoutSeconds": 300,
+  "timeoutSeconds": 600,
   "assert": {
     "commands": [
       "wb:create_research"

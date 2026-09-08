@@ -1,19 +1,53 @@
 # Copy these values into the applicable OMP config.yml.
-# Assign provider/model selectors to the built-in roles locally.
-# Marketplace agent discovery is provided by OMP's Claude-plugin provider.
+# Profile: Anthropic Max (high quota) + OpenAI Plus via openai-codex (low quota).
+# Anthropic carries volume: coordinator, workers, research, compaction.
+# OpenAI carries the low-volume, high-value calls: independent verification and
+# review, one call per task, always on the other family from the worker.
+# Revise the concrete models when either provider ships a new tier; the role
+# names and the volume/verification split are the stable part.
 enabledProviders:
   - claude-plugins
 
 modelRoleStorage: project
 
 modelRoles:
-  review: "@slow"
+  # Main session, coordinator, planning skills.
+  default: "anthropic/claude-sonnet-5"
+  # Read-only research agents (locator, pattern-finder) and mechanical workers.
+  smol: "anthropic/claude-haiku-4-5:high"
+  # Standard tier for workers, analyzers, and product research.
+  task: "anthropic/claude-sonnet-5:medium"
+  # Architectural or cross-cutting work and the single escalation fix worker.
+  slow: "anthropic/claude-fable-5-1:high"
+  # Independent verifier and reviews: the other family at maximum effort.
+  review: "openai-codex/gpt-5.5:xhigh"
 
 retry:
+  # Coding-plan quota is reported by both subscriptions; prefer the primary
+  # until it is inside the reserve, then take the configured fallback.
+  usageAwareFallback: true
+  usageReservePct: 15
+  # Background agents fall back without prompting; interactive turns confirm.
+  usageReservePolicy: confirm
+  # Do not sleep through 5-hour windows; fall back instead.
+  waitForUsageReset: false
   fallbackChains:
+    # Plus quota is the scarce resource. When it is exhausted the review role
+    # stays independent by moving to the strongest Anthropic model rather than
+    # the worker's own tier.
     review:
-      - "@slow"
-      - "@default"
+      - "anthropic/claude-fable-5-1:xhigh"
+    # If Max quota runs down, volume roles step down inside Anthropic first
+    # and only then cross to OpenAI, so Plus is spent last.
+    slow:
+      - "anthropic/claude-sonnet-5:high"
+      - "openai-codex/gpt-5.5:high"
+    task:
+      - "anthropic/claude-haiku-4-5:high"
+      - "openai-codex/gpt-5.5:medium"
+    default:
+      - "anthropic/claude-haiku-4-5:high"
+      - "openai-codex/gpt-5.5:medium"
 
 task:
   softRequestBudget: 200

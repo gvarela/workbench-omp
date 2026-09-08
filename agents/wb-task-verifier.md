@@ -2,8 +2,8 @@
 name: wb-task-verifier
 description: Verifies task requirements, focused tests, scope adherence, and implementation evidence as a strict pass or fail result.
 tools: [read, grep, glob, bash, lsp]
-model: ["@slow", "@task"]
-thinkingLevel: high
+model: ["@review", "@slow"]
+thinkingLevel: xhigh
 readSummarize: false
 blocking: true
 output:

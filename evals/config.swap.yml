@@ -1,6 +1,18 @@
+# Cross-provider overlay: every role on the other authenticated family than
+# config.yml. Main model and role aliases come from openai-codex; `review`
+# crosses back to Anthropic so the advisor/review path resolves on the
+# opposite family from the worker (port-plan 7.2).
 modelRoles:
-  default: "anthropic/claude-haiku-4-5"
-  smol: "anthropic/claude-haiku-4-5"
-  task: "anthropic/claude-haiku-4-5"
-  slow: "anthropic/claude-haiku-4-5"
-  review: "@slow"
+  default: "openai-codex/gpt-5.5"
+  smol: "openai-codex/gpt-5.5"
+  task: "openai-codex/gpt-5.5"
+  slow: "openai-codex/gpt-5.5"
+  review: "anthropic/claude-haiku-4-5"
+
+async:
+  enabled: false
+
+task:
+  softRequestBudget: 90
+  maxConcurrency: 2
+  enableEffort: false

@@ -36,7 +36,8 @@ const unreachablePaths = [/docs\/reference\//, /(?:^|[\s`"'(])\.\.\//];
 const knownTools: Record<string, true> = Object.fromEntries(
   [...BUILTIN_TOOL_NAMES, ...HIDDEN_TOOL_NAMES].map(name => [name, true]),
 );
-const modelRoles = ["@smol", "@task", "@slow", "@default"];
+/** Role aliases agents may declare. `@review` is the cross-family verification role; `@advisor` stays forbidden. */
+const modelRoles = ["@smol", "@task", "@slow", "@default", "@review"];
 const ajv = new Ajv({ strict: false });
 
 async function markdownFiles(root: string): Promise<string[]> {
@@ -151,15 +152,15 @@ if (scanRoot === projectRoot) {
     }
   }
 
-  const workerModels: Record<string, string[]> = {
-    "wb-task-worker-smol.md": ["@smol"],
-    "wb-task-worker-task.md": ["@task"],
-    "wb-task-worker-slow.md": ["@slow", "@task"],
+  const workerModels: Record<string, [string[], string]> = {
+    "wb-task-worker-smol.md": [["@smol"], "high"],
+    "wb-task-worker-task.md": [["@task"], "medium"],
+    "wb-task-worker-slow.md": [["@slow", "@task"], "high"],
   };
   const expectedTools = ["read", "write", "edit", "grep", "glob", "bash"];
   const expectedAutoload = ["wb-task-worker-contract", "wb-tdd-discipline"];
   let workerOutput: string | undefined;
-  for (const [file, model] of Object.entries(workerModels)) {
+  for (const [file, [model, thinkingLevel]] of Object.entries(workerModels)) {
     const display = `agents/${file}`;
     const fields = frontmatter(await readFile(resolve(projectRoot, display), "utf8"), display);
     if (fields.name !== file.slice(0, -3)) errors.push(`${display}: name must match filename`);
@@ -169,7 +170,7 @@ if (scanRoot === projectRoot) {
     if (JSON.stringify(fields.model) !== JSON.stringify(model)) {
       errors.push(`${display}: expected model ${JSON.stringify(model)}`);
     }
-    if (fields.thinkingLevel !== "xhigh") errors.push(`${display}: thinkingLevel must be xhigh`);
+    if (fields.thinkingLevel !== thinkingLevel) errors.push(`${display}: thinkingLevel must be ${thinkingLevel}`);
     if (JSON.stringify(fields.autoloadSkills) !== JSON.stringify(expectedAutoload)) {
       errors.push(`${display}: must autoload the worker contract and TDD discipline`);
     }
