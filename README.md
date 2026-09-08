@@ -62,7 +62,7 @@ model ids to what you have authenticated. The role split is the stable part:
 | `smol` | locator, pattern finder, mechanical workers | `anthropic/claude-haiku-4-5:high` |
 | `task` | standard workers, analyzers | `anthropic/claude-sonnet-5:medium` |
 | `slow` | cross-cutting work, the single escalation fix worker | `anthropic/claude-fable-5-1:high` |
-| `review` | `wb-task-verifier`, reviews: always the other provider family | `openai-codex/gpt-5.5:xhigh` |
+| `review` | `wb-task-verifier`, reviews: always the other provider family | `openai-codex/gpt-5.6-sol:xhigh` |
 
 The higher-quota subscription carries volume; the lower-quota one carries the
 one-call-per-task verification. `retry.usageAwareFallback` with per-role

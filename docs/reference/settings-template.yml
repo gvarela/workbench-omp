@@ -20,7 +20,7 @@ modelRoles:
   # Architectural or cross-cutting work and the single escalation fix worker.
   slow: "anthropic/claude-fable-5-1:high"
   # Independent verifier and reviews: the other family at maximum effort.
-  review: "openai-codex/gpt-5.5:xhigh"
+  review: "openai-codex/gpt-5.6-sol:xhigh"
 
 retry:
   # Coding-plan quota is reported by both subscriptions; prefer the primary
@@ -34,20 +34,22 @@ retry:
   fallbackChains:
     # Plus quota is the scarce resource. When it is exhausted the review role
     # stays independent by moving to the strongest Anthropic model rather than
-    # the worker's own tier.
+    # the worker's own tier. A same-provider alternative (gpt-6-astra) would
+    # share the exhausted quota, so it does not belong in this chain; swap it
+    # into `review` itself for open-ended architectural verification.
     review:
       - "anthropic/claude-fable-5-1:xhigh"
     # If Max quota runs down, volume roles step down inside Anthropic first
     # and only then cross to OpenAI, so Plus is spent last.
     slow:
       - "anthropic/claude-sonnet-5:high"
-      - "openai-codex/gpt-5.5:high"
+      - "openai-codex/gpt-5.6-sol:high"
     task:
       - "anthropic/claude-haiku-4-5:high"
-      - "openai-codex/gpt-5.5:medium"
+      - "openai-codex/gpt-5.6-sol:medium"
     default:
       - "anthropic/claude-haiku-4-5:high"
-      - "openai-codex/gpt-5.5:medium"
+      - "openai-codex/gpt-5.6-sol:medium"
 
 task:
   softRequestBudget: 200
