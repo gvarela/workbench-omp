@@ -64,26 +64,45 @@ plugin is enabled:
   not a human checkpoint, it continues the turn once or twice with the
   autonomy contract.
 
-## Configuration
+## Configuration: profiles
 
-Copy [`docs/reference/settings-template.yml`](docs/reference/settings-template.yml)
-into the applicable global or project OMP `config.yml` and adjust the concrete
-model ids to what you have authenticated. The role split is the stable part:
+Model routing is a set of role assignments in
+[`docs/reference/profiles/`](docs/reference/profiles/). The role split is the
+stable part; the concrete ids are what one account has authenticated today
+(Anthropic Max + OpenAI Plus, 2026-09) and are revised as models ship.
 
-| Role | Used by | Template (Anthropic Max + OpenAI Plus, 2026-09) |
+| Role | Used by | Failure it guards against |
 | --- | --- | --- |
-| `default` | main session, coordinator, planning skills | `anthropic/claude-opus-5:high` |
-| `smol` | locator, pattern finder, mechanical workers | `anthropic/claude-haiku-4-5:high` |
-| `task` | standard workers, analyzers | `anthropic/claude-sonnet-5:medium` |
-| `slow` | cross-cutting work, the single escalation fix worker | `anthropic/claude-fable-5-1:high` |
-| `review` | `wb-task-verifier`, reviews: always the other provider family | `openai-codex/gpt-5.6-sol:xhigh` |
+| `default` | main session, coordinator, planning skills | judgment errors no verifier catches |
+| `smol` | locator, pattern finder, mechanical workers | cheap to detect downstream |
+| `task` | standard workers, analyzers | caught by the verifier |
+| `slow` | cross-cutting work, the single escalation fix worker | tail of the difficulty distribution |
+| `review` | `wb-task-verifier`, `wb-oracle`: always the other provider family | shared blind spots of one family |
+| `advisor` | opt-in push review during planning (`/advisor on`) | same, per turn |
 
-The higher-quota subscription carries volume; the lower-quota one carries the
-one-call-per-task verification. `retry.usageAwareFallback` with per-role
-`fallbackChains` keeps the verifier cross-family until that quota is inside the
-reserve, then falls to the strongest same-family model. Swap the two families
-if your subscriptions are the other way round. Effort is part of the tier, so
-`task.enableEffort` stays off.
+`balanced.yml` is the base: copy it into `~/.omp/agent/config.yml` (roles
+follow your subscriptions, not a repo). The other files are overlays that
+change only `modelRoles` and their fallback chains; layer one with the
+repeatable `--config` flag for a session:
+
+```sh
+omp --config ~/.omp/wb/balanced.yml --config ~/.omp/wb/ultra.yml
+```
+
+| Profile | `default` | `task` | `slow` | `review` | When |
+| --- | --- | --- | --- | --- | --- |
+| `balanced` | Opus 5 · high | Sonnet 5 · med | Fable 5.1 · high | GPT-5.6 Sol · xhigh | daily |
+| `ultra` | Fable 5.1 · high | Opus 5 · high | Fable 5.1 · xhigh | GPT-6 Astra · xhigh | architecture, migrations; a miss costs more than the wait |
+| `low` | Sonnet 5 · med | Haiku 4.5 · high | Sonnet 5 · high | GPT-5.6 Sol · high | precise tasks with a plan behind them |
+| `anthropic-only` | Opus 5 · high | Sonnet 5 · med | Fable 5.1 · high | Fable 5.1 · xhigh | OpenAI unavailable; verifier loses the cross-family property |
+
+A profile is chosen at launch and fixed for the session: `/model` changes the
+thread only, and subagent roles stay as launched. Effort is part of each tier,
+so `task.enableEffort` stays off. The higher-quota subscription carries volume;
+the lower-quota one carries the one-call-per-task verification, and
+`retry.usageAwareFallback` with per-role `fallbackChains` moves a role to its
+chain only when its quota is inside the reserve. Swap the two families in
+every file if your subscriptions are the other way round.
 
 ## Development
 

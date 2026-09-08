@@ -1,0 +1,26 @@
+# Workbench overlay: ultra. Layer on balanced.yml:
+#   omp --config ~/.omp/wb/balanced.yml --config ~/.omp/wb/ultra.yml
+# For the hardest open-ended work: architecture, migrations, cross-cutting
+# changes where a miss costs more than the wait. Every tier moves up one rung;
+# the review slot takes the strongest OpenAI model so the cross-family second
+# opinion matches the ceiling of the work. Plus quota burns fast here: this is
+# a session-sized choice, not a daily default.
+modelRoles:
+  default: "anthropic/claude-fable-5-1:high"
+  smol: "anthropic/claude-sonnet-5:medium"
+  task: "anthropic/claude-opus-5:high"
+  slow: "anthropic/claude-fable-5-1:xhigh"
+  review: "openai-codex/gpt-6-astra:xhigh"
+  advisor: "openai-codex/gpt-6-astra:high"
+
+retry:
+  fallbackChains:
+    review:
+      - "openai-codex/gpt-5.6-sol:xhigh"
+      - "anthropic/claude-opus-5:xhigh"
+    task:
+      - "anthropic/claude-sonnet-5:high"
+      - "openai-codex/gpt-5.6-sol:high"
+    default:
+      - "anthropic/claude-opus-5:high"
+      - "anthropic/claude-sonnet-5:high"

@@ -1,5 +1,9 @@
-# Copy these values into the applicable OMP config.yml.
-# Profile: Anthropic Max (high quota) + OpenAI Plus via openai-codex (low quota).
+# Workbench base profile: Anthropic Max (high quota) + OpenAI Plus via
+# openai-codex (low quota). Copy into ~/.omp/agent/config.yml (roles follow
+# your subscriptions, not a repo) or launch with `omp --config <this file>`.
+# The sibling overlays (ultra.yml, low.yml, anthropic-only.yml) override only
+# `modelRoles` and layer on top: `omp --config balanced.yml --config ultra.yml`.
+#
 # Anthropic carries volume: coordinator, workers, research, compaction.
 # OpenAI carries the low-volume, high-value calls: independent verification and
 # review, one call per task, always on the other family from the worker.
@@ -8,7 +12,8 @@
 enabledProviders:
   - claude-plugins
 
-modelRoleStorage: project
+# Roles follow the account, so role changes made in-session persist globally.
+modelRoleStorage: global
 
 modelRoles:
   # Main session, coordinator, and the judgment stages (explore_design,

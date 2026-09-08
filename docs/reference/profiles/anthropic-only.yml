@@ -1,0 +1,26 @@
+# Workbench overlay: anthropic-only. Layer on balanced.yml:
+#   omp --config ~/.omp/wb/balanced.yml --config ~/.omp/wb/anthropic-only.yml
+# For when the OpenAI side is unavailable or its quota is spent and you want
+# that to be deterministic rather than left to usage-aware fallback. The
+# review slot loses the cross-family property (D14): the verifier and oracle
+# are independent of the worker only through the tier gap (Fable reviews
+# Sonnet). Treat it as a fallback profile, not a daily one.
+modelRoles:
+  default: "anthropic/claude-opus-5:high"
+  smol: "anthropic/claude-haiku-4-5:high"
+  task: "anthropic/claude-sonnet-5:medium"
+  slow: "anthropic/claude-fable-5-1:high"
+  review: "anthropic/claude-fable-5-1:xhigh"
+  advisor: "anthropic/claude-opus-5:high"
+
+retry:
+  fallbackChains:
+    review:
+      - "anthropic/claude-opus-5:xhigh"
+    slow:
+      - "anthropic/claude-sonnet-5:high"
+    task:
+      - "anthropic/claude-haiku-4-5:high"
+    default:
+      - "anthropic/claude-sonnet-5:high"
+      - "anthropic/claude-haiku-4-5:high"

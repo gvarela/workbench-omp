@@ -34,7 +34,7 @@ watch-list question that changes the design.
 | 0.7 | Probe P4 unresolved role alias | `agents/wb-codebase-locator.md` | Spawn with empty `modelRoles`; record whether `["@smol"]` fails, skips, or falls through. Decide whether every agent needs a trailing `"@default"` |
 | 0.8 | Probe P2 extensions in subagents | `extensions/workbench.ts` (temporary `tool_call` logger) | Spawn `wb-codebase-locator`; record whether the handler fires for the child's tool calls. Remove the logger |
 | 0.9 | Probe P5, P7, P8 | none | `skills.enableSkillCommands` default; `:level` suffix on `task.agentModelOverrides`; `bash.patterns` deny under subagent yolo. Record in the watch list |
-| 0.10 | Settings template | `docs/reference/settings-template.yml` (`modelRoles` with `review`, `retry.fallbackChains`, `task.softRequestBudget`, `task.maxConcurrency`, `task.enableEffort: false`, `modelRoleStorage: project`) | Referenced from `README.md`; contains no concrete model id |
+| 0.10 | Settings template | `docs/reference/profiles/balanced.yml` (`modelRoles` with `review`, `retry.fallbackChains`, `task.softRequestBudget`, `task.maxConcurrency`, `task.enableEffort: false`, `modelRoleStorage: project`) | Referenced from `README.md`; contains no concrete model id |
 
 Checkpoint: watch list P1–P8 all have a recorded answer; D1/D5/D6/D7 confirmed
 or amended in `upstream-sync.md`.
@@ -62,7 +62,7 @@ single shared worker contract with Beads mutation removed.
 | 2.2 ‖ | Validators | `agents/wb-research-validator.md`, `wb-task-verifier.md` with `output` schema (verifier shape from findings), `blocking: true` | Tier 1 passes; a spawn against a fixture with one wrong `file:line` returns `status: "fail"` with the finding |
 | 2.3 ‖ | Tiered worker profiles | `agents/wb-task-worker-smol.md`, `-task.md`, `-slow.md`; shared output schema; `autoloadSkills: [wb-task-worker-contract, wb-tdd-discipline]` | Tier 1 profile-matrix assertions pass; a spawn on a fixture task returns a schema-valid payload and runs no `bd` command |
 | 2.4 | Shared worker disciplines | `skills/wb-task-worker-contract/SKILL.md`, `skills/wb-tdd-discipline/SKILL.md` (`hide: true`) | Tier 0 resolves both autoload entries; discovery reports both hidden; worker execution follows Red, Green, Refactor |
-| 2.5 | Recommended settings check | `docs/reference/settings-template.yml` | Same worker spawn with `config.swap.yml` resolves on the other provider |
+| 2.5 | Recommended settings check | `docs/reference/profiles/balanced.yml` | Same worker spawn with `config.swap.yml` resolves on the other provider |
 
 Checkpoint: user inspects one worker and one verifier transcript.
 

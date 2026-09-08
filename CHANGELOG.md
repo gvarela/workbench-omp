@@ -3,6 +3,14 @@
 Port releases are versioned `<upstream version>-omp.<n>`. Upstream changes are
 tracked in the translation log in `docs/upstream-sync.md`.
 
+## Unreleased
+
+- Model profiles: `docs/reference/profiles/` replaces the single settings
+  template. `balanced.yml` is the base; `ultra`, `low`, and `anthropic-only`
+  are `modelRoles` overlays layered per session with the repeatable
+  `--config` flag. `default` moves to Opus 5 and steps through Sonnet before
+  Haiku. Advisor role documented as user-toggled (P12); `wb-oracle` added.
+
 ## 2.6.0-omp.1 - 2026-09-07
 
 Initial port of Workbench 2.6.0 (`447a1c6`) to oh-my-pi 18.1.11.

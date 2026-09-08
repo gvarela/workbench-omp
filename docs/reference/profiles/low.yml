@@ -1,0 +1,25 @@
+# Workbench overlay: low. Layer on balanced.yml:
+#   omp --config ~/.omp/wb/balanced.yml --config ~/.omp/wb/low.yml
+# For well-specified work: the plan exists, tasks are precise, and the
+# verify-then-retry loop is what makes cheap workers safe. Judgment stages
+# (explore_design, create_tasks) still warn when run here, because their
+# failures have no verifier. The review slot stays cross-family but drops one
+# effort level; one verifier call per task is still the gate.
+modelRoles:
+  default: "anthropic/claude-sonnet-5:medium"
+  smol: "anthropic/claude-haiku-4-5:medium"
+  task: "anthropic/claude-haiku-4-5:high"
+  slow: "anthropic/claude-sonnet-5:high"
+  review: "openai-codex/gpt-5.6-sol:high"
+  advisor: "openai-codex/gpt-5.6-sol:medium"
+
+retry:
+  fallbackChains:
+    review:
+      - "anthropic/claude-sonnet-5:xhigh"
+    slow:
+      - "anthropic/claude-haiku-4-5:high"
+    task:
+      - "openai-codex/gpt-5.6-sol:medium"
+    default:
+      - "anthropic/claude-haiku-4-5:high"
