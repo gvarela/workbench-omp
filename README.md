@@ -72,7 +72,7 @@ model ids to what you have authenticated. The role split is the stable part:
 
 | Role | Used by | Template (Anthropic Max + OpenAI Plus, 2026-09) |
 | --- | --- | --- |
-| `default` | main session, coordinator, planning skills | `anthropic/claude-sonnet-5` |
+| `default` | main session, coordinator, planning skills | `anthropic/claude-opus-5:high` |
 | `smol` | locator, pattern finder, mechanical workers | `anthropic/claude-haiku-4-5:high` |
 | `task` | standard workers, analyzers | `anthropic/claude-sonnet-5:medium` |
 | `slow` | cross-cutting work, the single escalation fix worker | `anthropic/claude-fable-5-1:high` |

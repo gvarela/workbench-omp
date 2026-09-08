@@ -11,8 +11,10 @@ enabledProviders:
 modelRoleStorage: project
 
 modelRoles:
-  # Main session, coordinator, planning skills.
-  default: "anthropic/claude-sonnet-5"
+  # Main session, coordinator, and the judgment stages (explore_design,
+  # create_tasks) whose failures no verifier catches; the ceiling model the
+  # high-quota subscription affords. Fable stays on `slow` for escalation.
+  default: "anthropic/claude-opus-5:high"
   # Read-only research agents (locator, pattern-finder) and mechanical workers.
   smol: "anthropic/claude-haiku-4-5:high"
   # Standard tier for workers, analyzers, and product research.
@@ -57,6 +59,7 @@ retry:
       - "anthropic/claude-haiku-4-5:high"
       - "openai-codex/gpt-5.6-sol:medium"
     default:
+      - "anthropic/claude-sonnet-5:high"
       - "anthropic/claude-haiku-4-5:high"
       - "openai-codex/gpt-5.6-sol:medium"
 
