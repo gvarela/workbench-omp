@@ -111,6 +111,8 @@ Use the slow-fix template and spawn exactly one `wb-task-worker-slow` for that t
 
 If the second verifier passes, close the issue. If it fails, leave the issue open/in progress and add it to the phase blocking list. Never spawn a second fix worker.
 
+When the second verifier fails or the verdict between implementation defect and plan defect is genuinely unclear, consult `wb-oracle` once before recording the blocking entry: one `task` item carrying the task contract, both verifier results, the fix worker's report, and the exact question. The oracle is read-only analysis from the other model family; it does not replace the verifier, spawn workers, or change any Beads state. Record its reframed problem and recommendation in the blocking entry and the Implementation Notes so the human checkpoint starts from that analysis.
+
 A fix worker that returns `blocked` with `blockers` citing a conflict with the approved design or task contract does not go onto the blocking list. Its claim is a lead: spawn a fresh `wb-task-verifier` against the landed state with the fix worker's blockers as input, and route the result through the plan-defect branch below. Any other fix-worker `blocked` result goes onto the blocking list with its exact blockers.
 
 ### Plan defect

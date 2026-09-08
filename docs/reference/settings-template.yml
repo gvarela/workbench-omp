@@ -19,8 +19,16 @@ modelRoles:
   task: "anthropic/claude-sonnet-5:medium"
   # Architectural or cross-cutting work and the single escalation fix worker.
   slow: "anthropic/claude-fable-5-1:high"
-  # Independent verifier and reviews: the other family at maximum effort.
+  # Cross-family slot at maximum effort, used by two agents: wb-task-verifier
+  # (hard pass/fail gate, one call per task) and wb-oracle (deep second
+  # opinion on demand: "ask the oracle" / "@oracle").
   review: "openai-codex/gpt-5.6-sol:xhigh"
+  # Optional push variant of the oracle: a passive second model that reviews
+  # every main-thread turn and injects notes. Same cross-family model as
+  # review. Enable per project for judgment stages (explore_design,
+  # create_tasks); leave off for implementation sessions where the
+  # verifier already gates each task.
+  advisor: "openai-codex/gpt-5.6-sol:high"
 
 retry:
   # Coding-plan quota is reported by both subscriptions; prefer the primary
@@ -56,3 +64,9 @@ task:
   maxConcurrency: 8
   enableEffort: false
   enableLsp: true
+
+# Uncomment for planning sessions. Every primary turn gets a cross-family
+# critique; concerns interrupt, nits ride along without interrupting.
+# advisor:
+#   enabled: true
+#   immuneTurns: 3

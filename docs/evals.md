@@ -69,10 +69,10 @@ CLI does, and asserts, without prompting a model:
 - The discovered set is exactly: 18 `wb:*` commands named by the plugin-dir
   provider (no prefix is fabricated), every `wb-*` skill in the file map with
   `wb-reference`, `wb-task-worker-contract`, and `wb-tdd-discipline` hidden,
-  and nine `wb-*` agents.
+  and ten `wb-*` agents.
 - Normalized agent fields: `readSummarize === false` on
   `wb-codebase-analyzer`, `wb-pattern-finder`, `wb-product-analyzer`,
-  `wb-research-validator`, `wb-task-verifier`; `blocking` on
+  `wb-research-validator`, `wb-task-verifier`, `wb-oracle`; `blocking` on
   `wb-task-verifier` and `wb-research-validator`; `output` on all three
   `wb-task-worker-*` and `wb-task-verifier`; no concrete model ids.
 - `extensionsResult` shows `extensions/workbench.ts` loaded with no errors

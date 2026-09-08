@@ -78,6 +78,10 @@ Run `scripts/validate` (static checks and discovery smoke) and
 run through `scripts/eval`; see [`docs/evals.md`](docs/evals.md). Markdown
 linting is available through `scripts/lint`.
 
-All 18 `/wb:*` commands, 22 `wb-*` skills, and nine `wb-*` task agents are
-discoverable. Phase 7 (dual-provider verification and the upstream baseline)
-is outstanding; see [`docs/port-plan.md`](docs/port-plan.md).
+All 18 `/wb:*` commands, 22 `wb-*` skills, and ten `wb-*` task agents are
+discoverable. Two agents ride the cross-family `review` role: `wb-task-verifier`
+is the hard pass/fail gate on every coordinated task, and `wb-oracle` is the
+bigger hammer for when a session is stuck or a decision is expensive: say "ask
+the oracle" or "@oracle" and the main model spawns it with the question; it
+reads, reframes, and recommends, and never writes. Phase 7 dual-provider
+scenarios 7.1 and 7.2 pass; see [`docs/port-plan.md`](docs/port-plan.md).

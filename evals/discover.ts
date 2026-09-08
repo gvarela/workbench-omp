@@ -132,6 +132,7 @@ const expected = {
     "wb-codebase-locator",
     "wb-pattern-finder",
     "wb-product-analyzer",
+    "wb-oracle",
     "wb-research-validator",
     "wb-task-verifier",
     "wb-task-worker-slow",
@@ -162,10 +163,11 @@ for (const name of [
   "wb-product-analyzer",
   "wb-research-validator",
   "wb-task-verifier",
+  "wb-oracle",
 ]) {
   if (requireAgent(name).readSummarize !== false) throw new Error(`${name}: readSummarize must be false`);
 }
-for (const name of ["wb-research-validator", "wb-task-verifier"]) {
+for (const name of ["wb-research-validator", "wb-task-verifier", "wb-oracle"]) {
   if (requireAgent(name).blocking !== true) throw new Error(`${name}: blocking must be true`);
 }
 for (const name of [
@@ -198,11 +200,19 @@ for (const [name, model, thinkingLevel] of workerProfiles) {
     throw new Error(`${name}: shared worker skills must autoload in order`);
   }
 }
-const verifier = requireAgent("wb-task-verifier");
-if (JSON.stringify(verifier.model) !== JSON.stringify(["@review", "@slow"])) {
-  throw new Error("wb-task-verifier: must run on @review (the other provider family) before @slow");
+// Both cross-family consumers ride the same `review` role: the verifier with a hard
+// schema and Beads gate, the oracle as free-form deep analysis. Neither may write.
+for (const name of ["wb-task-verifier", "wb-oracle"]) {
+  const agent = requireAgent(name);
+  if (JSON.stringify(agent.model) !== JSON.stringify(["@review", "@slow"])) {
+    throw new Error(`${name}: must run on @review (the other provider family) before @slow`);
+  }
+  if (agent.thinkingLevel !== "xhigh") throw new Error(`${name}: thinkingLevel must be xhigh`);
 }
-if (verifier.thinkingLevel !== "xhigh") throw new Error("wb-task-verifier: thinkingLevel must be xhigh");
+const oracle = requireAgent("wb-oracle");
+if (oracle.tools.some(tool => ["write", "edit", "bash"].includes(tool))) {
+  throw new Error("wb-oracle: must be read-only (no write, edit, or bash)");
+}
 for (const agent of report.agentFields) {
   if (agent.model?.some(model => !model.startsWith("@"))) {
     throw new Error(`${agent.name}: concrete model ids are forbidden`);

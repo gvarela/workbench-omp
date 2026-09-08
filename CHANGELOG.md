@@ -12,10 +12,11 @@ Initial port of Workbench 2.6.0 (`447a1c6`) to oh-my-pi 18.1.11.
   task planning, inline and coordinated implementation, execution and project
   validation, status reconciliation, handoff and resume, mockup creation and
   iteration, review prep, help.
-- Nine `wb-*` task agents: four read-only research agents, a research
-  validator, a task verifier with a structured pass/fail schema, and three
-  tiered task workers (`@smol`, `@task`, `@slow`) sharing a hidden worker
-  contract and TDD discipline.
+- Ten `wb-*` task agents: four read-only research agents, a research
+  validator, a cross-family task verifier with a structured pass/fail schema,
+  a read-only oracle for deep second opinions on the same `review` role, and
+  three tiered task workers (`@smol`, `@task`, `@slow`) sharing a hidden
+  worker contract and TDD discipline.
 - Rules: always-apply project structure, red-flag TTSR, and verification
   scoped to the main session and task workers.
 - `extensions/workbench.ts`: Beads mode detection with bounded `bd prime`
