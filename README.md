@@ -93,9 +93,25 @@ run through `scripts/eval`; see [`docs/evals.md`](docs/evals.md). Markdown
 linting is available through `scripts/lint`.
 
 All 18 `/wb:*` commands, 22 `wb-*` skills, and ten `wb-*` task agents are
-discoverable. Two agents ride the cross-family `review` role: `wb-task-verifier`
-is the hard pass/fail gate on every coordinated task, and `wb-oracle` is the
-bigger hammer for when a session is stuck or a decision is expensive: say "ask
-the oracle" or "@oracle" and the main model spawns it with the question; it
-reads, reframes, and recommends, and never writes. Phase 7 dual-provider
-scenarios 7.1 and 7.2 pass; see [`docs/port-plan.md`](docs/port-plan.md).
+discoverable. Phase 7 dual-provider scenarios 7.1 and 7.2 pass; see
+[`docs/port-plan.md`](docs/port-plan.md).
+
+## Second opinions from the other model family
+
+Three surfaces put the `review`-role model (the other provider family) next to
+the session model. They differ in who invokes them and when:
+
+| Surface | Invoked by | When | Cost |
+| --- | --- | --- | --- |
+| `wb-task-verifier` | the coordinator, automatically | after every coordinated task | one call per task |
+| `wb-oracle` | you ("ask the oracle", "@oracle") or the coordinator when a task is stuck | on demand | one call per question |
+| `advisor` | you, with `/advisor on` and `/advisor off` | every primary turn while on | one review-tier call per turn |
+
+The verifier is a gate with a strict schema; it decides whether a task closes.
+The oracle is analysis: it reframes the problem, ranks findings by cost if
+wrong, and recommends, but never writes. The advisor is the oracle in push
+mode, right for `/wb:explore_design` and `/wb:create_tasks`, where the
+expensive failures are judgment errors that no verifier catches. Workbench
+cannot toggle the advisor per skill on the current OMP (watch-list P12), so
+the planning skills remind you to turn it on and to turn it off before
+implementation, where it would spend a review call on every coordination turn.

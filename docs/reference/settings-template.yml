@@ -23,11 +23,12 @@ modelRoles:
   # (hard pass/fail gate, one call per task) and wb-oracle (deep second
   # opinion on demand: "ask the oracle" / "@oracle").
   review: "openai-codex/gpt-5.6-sol:xhigh"
-  # Optional push variant of the oracle: a passive second model that reviews
-  # every main-thread turn and injects notes. Same cross-family model as
-  # review. Enable per project for judgment stages (explore_design,
-  # create_tasks); leave off for implementation sessions where the
-  # verifier already gates each task.
+  # Push variant of the oracle: a passive second model that reviews every
+  # main-thread turn and injects notes. Same cross-family model as review.
+  # Assigning the role here costs nothing; the advisor runs only while enabled.
+  # Workbench cannot toggle it per skill (watch-list P12), so the user turns it
+  # on with `/advisor on` before /wb:explore_design or /wb:create_tasks and
+  # `/advisor off` before implementation, where the verifier already gates.
   advisor: "openai-codex/gpt-5.6-sol:high"
 
 retry:
@@ -65,8 +66,8 @@ task:
   enableEffort: false
   enableLsp: true
 
-# Uncomment for planning sessions. Every primary turn gets a cross-family
-# critique; concerns interrupt, nits ride along without interrupting.
-# advisor:
-#   enabled: true
-#   immuneTurns: 3
+# Leave `advisor.enabled` unset (off) and use `/advisor on|off` per session.
+# Set it true only for a project whose sessions are planning-only; it spends a
+# review-tier call on every primary turn, including worker coordination.
+advisor:
+  immuneTurns: 3

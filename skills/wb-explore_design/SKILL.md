@@ -5,7 +5,7 @@ description: Facilitates architecture trade-off exploration, requires explicit h
 
 # Explore design directions
 
-This is a judgment-heavy discussion stage between research and formal design. Use the session's strongest configured planning capability. If the active model is not the configured slow or high-reasoning choice, warn the user once without blocking.
+This is a judgment-heavy discussion stage between research and formal design. Use the session's strongest configured planning capability. If the active model is not the configured slow or high-reasoning choice, warn the user once without blocking. In the same warning, when an `advisor` role is configured and the advisor is off, suggest `/advisor on` for this stage: a cross-family second model critiques each turn, and `wb-oracle` remains available for a deeper one-off opinion. Do not toggle it yourself.
 
 This workflow produces possibilities, not implementation plans. It may write `thoughts/` records and Beads `Decide:` issues. It must never write or seed `design.md`, implementation steps, task phases, or code.
 

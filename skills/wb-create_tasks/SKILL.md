@@ -5,7 +5,7 @@ description: Converts approved design into executable phased tasks plus a comple
 
 # Create execution tasks
 
-This judgment-heavy workflow writes specifications consumed by workers and verifiers. Use the session's strongest configured planning capability. Warn once, without blocking, when the active session is not using the configured high-reasoning planning choice.
+This judgment-heavy workflow writes specifications consumed by workers and verifiers. Use the session's strongest configured planning capability. Warn once, without blocking, when the active session is not using the configured high-reasoning planning choice. In the same warning, when an `advisor` role is configured and the advisor is off, suggest `/advisor on` for this stage and `/advisor off` before implementation; `wb-oracle` remains available for a one-off critique of the dependency graph. Do not toggle it yourself.
 
 Plan only how to implement the approved design. Add no scope, requirements, hardening, or architectural decisions. A design defect returns to `/wb:create_design`; never plan around it.
 

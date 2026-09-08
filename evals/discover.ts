@@ -80,7 +80,9 @@ const [skillsResult, commands, agentsResult, rulesResult, extensionsResult] = aw
   discoverSlashCommands(root),
   discoverAgents(root, home, extensionRoots),
   loadCapability<Named>("rules", { cwd: root }),
-  discoverAndLoadExtensions([extensionPath], root),
+  // `ambient: false` skips the user plugin registry, so a linked copy of this
+  // checkout (`omp plugin link`, the documented dev setup) is not loaded twice.
+  discoverAndLoadExtensions([extensionPath], root, undefined, undefined, { ambient: false }),
 ]);
 
 const report = {
