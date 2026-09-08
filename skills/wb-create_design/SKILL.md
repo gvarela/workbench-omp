@@ -53,7 +53,7 @@ Do not write `design.md` before this decision checkpoint passes.
 
 Read `skill://wb-create_design/templates.md` in full. Carry existing creation frontmatter over unchanged and write `status: draft`, `last_updated`, `depends_on`, `design_approach`, `decision_records`, and `approval: pending` as the template shows. `/wb:update_status` moves `status` to `ready` after approval; do not write `ready` here.
 
-Write only:
+Keep every `##` section of the template in its order, including `## Rejected alternatives` even when the only rejected alternative is the one the closed `Decide:` record ruled out. Write only:
 
 - problem and measurable success;
 - approved architecture, contracts, data model, and integration boundaries;

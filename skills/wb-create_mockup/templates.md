@@ -276,6 +276,8 @@ Keep only the stylesheet and icon lines that research supports; delete the rest.
 
 ## mockup-log.md Template (Step 8)
 
+Frontmatter values are literal: `status` is exactly `iterating` until finalization changes it to `finalized`; per-version review state belongs in the Version History entry (`**Status**: In Review`), never in frontmatter.
+
 ```markdown
 ---
 feature: [feature name]

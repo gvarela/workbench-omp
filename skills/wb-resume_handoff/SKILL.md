@@ -41,7 +41,11 @@ Never repeat a failed attempt unless current evidence changes its failure condit
 
 Read `skill://wb-resume_handoff/templates.md` in full. Render the report with currency verdict, Git and Beads deltas, context retained or superseded, blocker state, and the immediate dependency-ready issue. State exact start locations, acceptance, and verification. Name only verification commands that were actually run or are present in the current task document; do not invent alternate `bd` syntax.
 
-End with one exact command using the project directory, never an individual document path: `/wb:update_status <project-directory>`, `/wb:validate_project <project-directory>`, `/wb:implement_tasks <project-directory>`, or `/wb:implement_coordinated <project-directory>`, selected from observed current state.
+End with one exact command using the project directory, never an individual document path. Select it in this order from observed current state, taking the first rule that applies:
+
+1. Plan/Beads drift (a mapped issue's live state disagrees with `tasks.md` `status`, `current_phase`, or `completed_tasks`, or a closed milestone is not reflected in the documents): `/wb:update_status <project-directory>`.
+2. No drift and a ready mapped task exists: `/wb:implement_tasks <project-directory>` or `/wb:implement_coordinated <project-directory>`, matching the handoff's execution mode.
+3. No drift and no ready task (phase awaiting its human checkpoint, or the epic is complete): `/wb:validate_project <project-directory>`.
 
 Before sending the report, verify that it:
 

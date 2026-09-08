@@ -29,6 +29,7 @@ beads_blocked: [{{blocked_ids}}]
 - **Recorded HEAD:** `{{full_head_commit}}`
 - **Beads mode:** {{git_or_stealth_and_evidence}}
 - **Document/Beads drift:** {{exact_drift_or_none}}
+- **Reconcile first:** `/wb:update_status {{project_directory}}` when drift is recorded above; otherwise `none`
 
 ## Current state
 

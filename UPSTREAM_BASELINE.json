@@ -1,10 +1,10 @@
 {
   "repository": "git@github.com:gvarela/workbench.git",
   "local_checkout": "../workbench",
-  "baseline_commit": null,
+  "baseline_commit": "447a1c618f330ec439547f4c564a7bce364be90b",
   "port_target_commit": "447a1c618f330ec439547f4c564a7bce364be90b",
   "port_target_version": "2.6.0",
-  "ported_on": null,
+  "ported_on": "2026-09-07",
   "plugin": "wb",
-  "notes": "baseline_commit stays null until the initial port reaches the target and every upstream file is accounted for in docs/upstream-sync.md. Advance it only per the procedure in that document."
+  "notes": "baseline_commit is the last upstream commit fully reflected in this port. Advance it only per the synchronization procedure in docs/upstream-sync.md, together with a translation-log row and passing quality gates."
 }

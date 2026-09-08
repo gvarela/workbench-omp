@@ -217,6 +217,7 @@ files are declarative model profiles.
 | `.claude-plugin/marketplace.json` (repo root) | `.omp-plugin/marketplace.json` | Rewrite |
 | Repo `CLAUDE.md`, `README.md`, `CHANGELOG.md`, `RELEASING.md`, `docs/*.md` | `README.md`, `CHANGELOG.md`, `docs/` | Upstream-only unless a behavior the port ships changes; port keeps its own changelog |
 | Repo `.codex/` | — | Not applicable (beads' own Codex hooks) |
+| Repo `.markdownlintrc`, `.gitignore`, `.gitattributes` | `.markdownlintrc`, `.gitignore` | `.markdownlintrc` Copy; `.gitignore` Rewrite (`.artifacts/`, `node_modules/`); `.gitattributes` not needed |
 
 ## Intentional divergences
 
@@ -292,7 +293,7 @@ Append-only. One row per upstream PR (or commit when unmerged).
 
 | Date | Upstream ref | Classification | Destination files | Decision / notes |
 | --- | --- | --- | --- | --- |
-| — | `447a1c6` (v2.6.0) | Initial port target | — | Baseline not yet set; see `UPSTREAM_BASELINE.json` |
+| 2026-09-07 | `447a1c6` (v2.6.0) | Initial port | Every file in the file map above | Baseline set at the port target. All `plugin/` skills, agents, hooks, scripts, and reference docs are ported or classified (D8: `create_execution` not ported); repo docs, `CLAUDE.md`, `RELEASING.md`, `.codex/`, `.gitattributes` are upstream-only. Divergences D1–D13 adopted. Verified by tiers 0–2 and the tier 3 cases listed in `docs/evals.md`; dual-provider scenarios (port-plan 7.1–7.3) remain open. |
 
 ## Quality gates
 

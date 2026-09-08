@@ -42,7 +42,7 @@ For each statement the user makes:
 - **KEEP** — confirmed requirement; add to "Confirmed (KEEP)".
 - **REMOVE** — rejected idea; add to "Rejected (REMOVE)" with the user's rationale.
 - **CHANGE** — modification for the next version.
-- **QUESTION** — needs an answer; create a Beads issue, ask it in the summary, and carry it as "Still Open" in the next `decisions.md`. Open questions block finalization only; they never block a version, and the version keeps the previous behavior for the questioned element.
+- **QUESTION** — needs an answer; create a Beads issue, ask it in the summary, and carry it as "Still Open" in the next `decisions.md`. Open questions block finalization only; they never block a version. In `mockup.md` and `mockup.html` the questioned element keeps the previous version's concrete behavior, cited as provisional with the issue id: never write `TBD`, `TODO`, or an empty slot into a version document.
 - **ASSUMPTION** — unvalidated belief the mockup depends on; create a Beads issue.
 
 Split compound feedback into one entry per type: "Keep header but make it blue" → KEEP header layout + CHANGE header color to blue. Quote the user's exact words in every entry; never paraphrase into a vague summary.
@@ -101,7 +101,7 @@ Do not create a version until the user confirms or asks for the next version. Am
 7. Write the new `mockup.html` to match the new `mockup.md`: keep the app's stylesheet links and classes from research, update icons per feedback using the researched icon system only, no placeholder classes, no emojis, and no CSS `animation`/`transition` or timer-driven scripts (a continuously repainting page hangs the headless screenshot; render loading states statically).
 8. Read `skill://wb-mockup-iteration/templates.md` now and write `decisions.md` with its exact frontmatter (`version: [N+1]`, `created`, `previous_version: [N]`) and sections (delta from v00N only, plus cumulative requirements).
 9. Visual validation (step 5).
-10. Update `mockups/mockup-log.md`: frontmatter `current_version: [N+1]` and `last_updated: [date]`; add the version entry from the template to Version History; move versioned CHANGE items out of "Open (DECIDING)".
+10. Update `mockups/mockup-log.md` with `edit`, never by rewriting the file: frontmatter `current_version: [N+1]` and `last_updated: [date]`; add the version entry from the template to Version History; move versioned CHANGE items out of "Open (DECIDING)". The log's headings are fixed: `## Running Requirements` always keeps `### Confirmed (KEEP)`, `### Rejected (REMOVE)`, and `### Open (DECIDING)` in that order, each present even when empty. Append entries under them; never remove, rename, or merge a section.
 
 Never modify a previous version directory.
 

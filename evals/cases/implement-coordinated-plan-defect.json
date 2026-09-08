@@ -29,7 +29,6 @@
       "wb:implement_coordinated"
     ],
     "finalContains": [
-      "Design revision:",
       "eval-epic.1.1"
     ],
     "trace": {

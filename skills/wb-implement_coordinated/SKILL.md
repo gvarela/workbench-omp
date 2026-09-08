@@ -37,6 +37,7 @@ From the repository root, run `omp config get task.maxConcurrency --json` and `o
 
 A mapped task left `in_progress` with no live worker is not a verification failure and is never verified as-is. Diagnose it with `git status --porcelain` and `git diff --stat` on its authorized files, per the reference playbook:
 
+- pending verification: a worker or fix worker completed (the handoff, Implementation Notes, or the user says so) and the result that would decide the task has no schema-valid `wb-task-verifier` judgment in this session. This includes the second gate after a fix worker. Spawn one `wb-task-verifier` item now, before any classification. The coordinator's own `bd show`, test run, or source read is coordinator inspection: it never counts as the gate, never places a task on the blocking list, and never triggers the plan-defect protocol. A resumed session that ends with a classification but no `task` call in its own trace has violated this step.
 - truncation: useful partial work landed and no blocker was reported. Spawn one tail worker item (sub-agent prompts) for only the unfinished tail, naming the landed files and remaining criteria; then verify the whole task.
 - genuine failure: little or nothing landed, or a blocker was reported. Leave the issue in progress, record the exact evidence on the phase blocking list, and continue with independent ready work.
 

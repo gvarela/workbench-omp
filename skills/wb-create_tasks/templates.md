@@ -60,7 +60,7 @@ Use `bd ready`, `bd blocked`, and `bd show <id>` for current state. This documen
 ### Task {{number}}: {{specific_outcome}}
 
 - **Beads:** `{{task_id}}`
-- **Type:** {{setup_implementation_test_integration}}
+- **Type:** {{setup_or_implementation_or_integration}} (never a standalone test task: every behavior task owns its focused test under TDD)
 - **Targets:** `{{path:start-end}}`, `{{approved_new_path}}`
 - **Current state:** {{research_reference}}
 - **Target behavior:** {{design_reference}}

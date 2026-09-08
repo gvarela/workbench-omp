@@ -127,7 +127,11 @@ Bound every screenshot: pass `{ timeout: 20000 }` as the `tab.run` option and ra
 
 If the app's stylesheets require a running server (bundled CSS, framework dev server), start it with `hub` `op: "start"` (for example `application: "bun", args: ["run", "dev"], ready: { port: <port> }`), wait for readiness, and open `http://127.0.0.1:<port>/<path-to-mockup>` instead of the `file://` URL. Stop the server with `hub` `op: "stop"` when done.
 
-Before inspecting the image, prove the stylesheets loaded: in the same `tab.run`, evaluate `[...document.styleSheets].filter(s => s.href).map(s => ({ href: s.href, rules: (() => { try { return s.cssRules.length; } catch { return -1; } })() }))` and require every linked app stylesheet to report `rules > 0`. A stylesheet with `rules: 0` or missing from the list did not resolve: fix the `href` and re-render before continuing. Then confirm the PNG exists and is not empty, and inspect the rendered image against the research summary: colors, spacing, typography, icons, and layout. Fix `mockup.html` and re-render before presenting anything that clearly diverges from the app.
+### Barrier 6: stylesheets resolved
+
+Before inspecting the image, prove the stylesheets loaded. Inside `tab.run`, evaluate `[...document.styleSheets].filter(s => s.href).map(s => ({ href: s.href, rules: (() => { try { return s.cssRules.length; } catch { return -1; } })() }))` and return it. Every linked app stylesheet must report `rules > 0`. Any `rules: 0`, `rules: -1`, or missing entry means the `href` did not resolve: this is a failed barrier, not a note. Recompute the relative path from the mockup directory (list the directories between `mockups/v001/` and the stylesheet with `glob`/`read`, one `..` per level), edit `mockup.html`, re-render, and re-run the check until it passes. Do not write the log, present, or continue to step 8 while any app stylesheet has zero rules; the screenshot of an unstyled page is not a valid preview.
+
+Then confirm the PNG exists and is not empty, and inspect the rendered image against the research summary: colors, spacing, typography, icons, and layout. Fix `mockup.html` and re-render before presenting anything that clearly diverges from the app.
 
 If research found a similar feature, offer a comparison: open the existing page the same way, call `tab.screenshot({ fullPage: true })` to show it, and describe the differences.
 
